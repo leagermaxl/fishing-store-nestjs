@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  fishing-store-postgres:
+    container_name: fishing-store-postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5434:5432
+    volumes:
+      - fishing_store_postgres_data:/var/lib/postgresql/data
+    networks:
+      - fishing-store-nestjs
+
+volumes:
+  fishing_store_postgres_data:
+
+networks:
+  fishing-store-nestjs:
