@@ -2,9 +2,10 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { PrismaModule } from './prisma/prisma.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
-	imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule],
+	imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, ProductModule],
 	controllers: [],
 	providers: [],
 })
