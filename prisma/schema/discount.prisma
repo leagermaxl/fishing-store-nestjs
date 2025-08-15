@@ -1,0 +1,15 @@
+model Discount {
+  id String @id @default(uuid())
+
+  name       String
+  percentage Float
+  startDate  DateTime?        @map("start_date")
+  endDate    DateTime?        @map("end_date")
+  products   Product[]
+  variants   ProductVariant[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("discounts")
+}
