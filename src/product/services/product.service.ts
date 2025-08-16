@@ -93,7 +93,7 @@ export class ProductService {
 	async update(id: string, dto: UpdateProductRequest): Promise<null> {
 		const { name, description, categoryId, images, discountId } = dto;
 
-		const imageArr = images.map((imgObj) => imgObj.value);
+		const imageArr = images?.map((imgObj) => imgObj.value);
 
 		const product = await this.prismaService.product.update({
 			where: { id },

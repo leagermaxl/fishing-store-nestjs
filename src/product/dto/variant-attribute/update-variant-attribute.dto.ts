@@ -1,17 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateVariantAttributeRequest } from './create-variant-attribute.dto';
 
-export class UpdateVariantAttributeRequest {
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	variantId: string;
-
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	typeId: string;
-
-	@IsString()
-	@IsNotEmpty()
-	value: string;
-}
+export class UpdateVariantAttributeRequest extends PartialType(CreateVariantAttributeRequest) {}

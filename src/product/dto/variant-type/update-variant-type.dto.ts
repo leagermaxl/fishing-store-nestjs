@@ -1,15 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '../../product.constants';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateVariantTypeRequest } from './create-variant-type.dto';
 
-export class UpdateVariantTypeRequest {
-	@IsString()
-	@IsNotEmpty()
-	@MinLength(NAME_MIN_LENGTH)
-	@MaxLength(NAME_MAX_LENGTH)
-	name: string;
-
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	categoryId: string;
-}
+export class UpdateVariantTypeRequest extends PartialType(CreateVariantTypeRequest) {}

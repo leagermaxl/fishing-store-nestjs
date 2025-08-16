@@ -1,24 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID, Min } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateVariantRequest } from './create-variant.dto';
 
-export class UpdateVariantRequest {
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	productId: string;
-
-	@IsNumber()
-	@IsNotEmpty()
-	@Min(0)
-	price: number;
-
-	@IsNumber()
-	@IsNotEmpty()
-	@Min(0)
-	inStock: number;
-
-	@IsString()
-	@IsNotEmpty()
-	@IsOptional()
-	@IsUUID()
-	discountId?: string;
-}
+export class UpdateVariantRequest extends PartialType(CreateVariantRequest) {}

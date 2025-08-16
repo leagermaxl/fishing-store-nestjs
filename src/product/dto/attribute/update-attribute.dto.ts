@@ -1,17 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateAttributeRequest } from './create-attribute.dto';
 
-export class UpdateAttributeRequest {
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	productId: string;
-
-	@IsString()
-	@IsNotEmpty()
-	@IsUUID()
-	typeId: string;
-
-	@IsString()
-	@IsNotEmpty()
-	value: string;
-}
+export class UpdateAttributeRequest extends PartialType(CreateAttributeRequest) {}
