@@ -10,8 +10,9 @@ import {
 	MinLength,
 	ValidateNested,
 } from 'class-validator';
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '../discount.constants';
-import { DateType } from './discount.types';
+
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '@/discount/discount.constants';
+import { DateType } from '@/discount/dto/discount.types';
 
 export class CreateDiscountRequest {
 	@IsString()

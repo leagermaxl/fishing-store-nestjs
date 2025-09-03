@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AttributeController } from './controllers/attribute.controller';
-import { ProductController } from './controllers/product.controller';
-import { VariantAttributeController } from './controllers/variant-attribute.controller';
-import { VariantTypeController } from './controllers/variant-type.controller';
-import { VariantController } from './controllers/variant.controller';
-import { AttributeService } from './services/attribute.service';
-import { ProductService } from './services/product.service';
-import { VariantAttributeService } from './services/variant-attribute.service';
-import { VariantTypeService } from './services/variant-type.service';
-import { VariantService } from './services/variant.service';
+
+import { AttributeController } from '@/product/controllers/attribute.controller';
+import { ProductController } from '@/product/controllers/product.controller';
+import { VariantAttributeController } from '@/product/controllers/variant-attribute.controller';
+import { VariantTypeController } from '@/product/controllers/variant-type.controller';
+import { VariantController } from '@/product/controllers/variant.controller';
+import { AttributeService } from '@/product/services/attribute.service';
+import { ProductService } from '@/product/services/product.service';
+import { VariantAttributeService } from '@/product/services/variant-attribute.service';
+import { VariantTypeService } from '@/product/services/variant-type.service';
+import { VariantService } from '@/product/services/variant.service';
 
 @Module({
 	controllers: [

@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProductAttribute } from '@prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateAttributeRequest } from '../dto/attribute/create-attribute.dto';
-import { UpdateAttributeRequest } from '../dto/attribute/update-attribute.dto';
-import { ATTRIBUTES_NOT_FOUND } from '../product.constants';
+
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateAttributeRequest } from '@/product/dto/attribute/create-attribute.dto';
+import { UpdateAttributeRequest } from '@/product/dto/attribute/update-attribute.dto';
+import { ATTRIBUTES_NOT_FOUND } from '@/product/product.constants';
 
 @Injectable()
 export class AttributeService {

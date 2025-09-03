@@ -9,9 +9,10 @@ import {
 	Patch,
 	Post,
 } from '@nestjs/common';
-import { CreateVariantTypeRequest } from '../dto/variant-type/create-variant-type.dto';
-import { UpdateVariantTypeRequest } from '../dto/variant-type/update-variant-type.dto';
-import { VariantTypeService } from '../services/variant-type.service';
+
+import { CreateVariantTypeRequest } from '@/product/dto/variant-type/create-variant-type.dto';
+import { UpdateVariantTypeRequest } from '@/product/dto/variant-type/update-variant-type.dto';
+import { VariantTypeService } from '@/product/services/variant-type.service';
 
 @Controller('product/type')
 export class VariantTypeController {

@@ -8,13 +8,14 @@ import {
 	ProductVariant,
 	VariantType,
 } from '@prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateProductRequest } from '../dto/create-product.dto';
-import { ProductWithCategory } from '../dto/product.types';
-import { UpdateProductRequest } from '../dto/update-product.dto';
-import { CreateVariantsDto } from '../dto/variant/create-variants.dto';
-import { PRODUCTS_NOT_FOUND } from '../product.constants';
-import { generateSKU } from '../utils/generateSku';
+
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateProductRequest } from '@/product/dto/create-product.dto';
+import { ProductWithCategory } from '@/product/dto/product.types';
+import { UpdateProductRequest } from '@/product/dto/update-product.dto';
+import { CreateVariantsDto } from '@/product/dto/variant/create-variants.dto';
+import { PRODUCTS_NOT_FOUND } from '@/product/product.constants';
+import { generateSKU } from '@/product/utils/generateSku';
 
 export interface ProductFull extends Product {
 	category?: Category;
@@ -155,7 +156,12 @@ export class ProductService {
 					categoryId,
 				);
 
-				const newAttributes = await this.createAttributes(tx, attributes, newProduct.id, typeMap);
+				const newAttributes = await this.createAttributes(
+					tx,
+					attributes,
+					newProduct.id,
+					typeMap,
+				);
 
 				resultData.variantTypes?.push(...created);
 				resultData.attributes = newAttributes;

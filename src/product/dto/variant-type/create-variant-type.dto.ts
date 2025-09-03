@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '../../product.constants';
+
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '@/product/product.constants';
 
 export class CreateVariantTypeRequest {
 	@IsString()

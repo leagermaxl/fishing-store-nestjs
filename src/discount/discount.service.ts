@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Discount, Product, ProductVariant } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { DISCOUNTS_NOT_FOUND } from './discount.constants';
-import { CreateDiscountRequest } from './dto/create-discount.dto';
-import { UpdateDiscountRequest } from './dto/update-discount.dto';
+
+import { DISCOUNTS_NOT_FOUND } from '@/discount/discount.constants';
+import { CreateDiscountRequest } from '@/discount/dto/create-discount.dto';
+import { UpdateDiscountRequest } from '@/discount/dto/update-discount.dto';
+import { PrismaService } from '@/prisma/prisma.service';
 
 export interface DiscountFull extends Discount {
 	products?: Product[];

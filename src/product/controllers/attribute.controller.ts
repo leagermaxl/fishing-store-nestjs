@@ -9,8 +9,9 @@ import {
 	Patch,
 	Post,
 } from '@nestjs/common';
-import { CreateAttributeRequest } from '../dto/attribute/create-attribute.dto';
-import { AttributeService } from '../services/attribute.service';
+
+import { CreateAttributeRequest } from '@/product/dto/attribute/create-attribute.dto';
+import { AttributeService } from '@/product/services/attribute.service';
 
 @Controller('product/attribute')
 export class AttributeController {

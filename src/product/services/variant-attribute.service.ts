@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProductVariantAttribute } from '@prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateVariantAttributeRequest } from '../dto/variant-attribute/create-variant-attribute.dto';
-import { UpdateVariantAttributeRequest } from '../dto/variant-attribute/update-variant-attribute.dto';
-import { VARIANT_ATTRIBUTES_NOT_FOUND } from '../product.constants';
+
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateVariantAttributeRequest } from '@/product/dto/variant-attribute/create-variant-attribute.dto';
+import { UpdateVariantAttributeRequest } from '@/product/dto/variant-attribute/update-variant-attribute.dto';
+import { VARIANT_ATTRIBUTES_NOT_FOUND } from '@/product/product.constants';
 
 @Injectable()
 export class VariantAttributeService {

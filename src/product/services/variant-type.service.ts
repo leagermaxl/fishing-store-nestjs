@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { VariantType } from '@prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateVariantTypeRequest } from '../dto/variant-type/create-variant-type.dto';
-import { UpdateVariantTypeRequest } from '../dto/variant-type/update-variant-type.dto';
-import { VARIANT_TYPES_NOT_FOUND } from '../product.constants';
+
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateVariantTypeRequest } from '@/product/dto/variant-type/create-variant-type.dto';
+import { UpdateVariantTypeRequest } from '@/product/dto/variant-type/update-variant-type.dto';
+import { VARIANT_TYPES_NOT_FOUND } from '@/product/product.constants';
 
 @Injectable()
 export class VariantTypeService {
@@ -32,7 +33,9 @@ export class VariantTypeService {
 	async create(dto: CreateVariantTypeRequest): Promise<VariantType> {
 		const { name, categoryId } = dto;
 
-		const variantType = await this.prismaService.variantType.create({ data: { name, categoryId } });
+		const variantType = await this.prismaService.variantType.create({
+			data: { name, categoryId },
+		});
 
 		return variantType;
 	}

@@ -1,7 +1,8 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { CreateVariantAttributeRequest } from '../dto/variant-attribute/create-variant-attribute.dto';
-import { UpdateVariantAttributeRequest } from '../dto/variant-attribute/update-variant-attribute.dto';
-import { VariantAttributeService } from '../services/variant-attribute.service';
+
+import { CreateVariantAttributeRequest } from '@/product/dto/variant-attribute/create-variant-attribute.dto';
+import { UpdateVariantAttributeRequest } from '@/product/dto/variant-attribute/update-variant-attribute.dto';
+import { VariantAttributeService } from '@/product/services/variant-attribute.service';
 
 @Controller('product/variant-attribute')
 export class VariantAttributeController {

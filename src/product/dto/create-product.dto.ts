@@ -9,8 +9,13 @@ import {
 	MinLength,
 	ValidateNested,
 } from 'class-validator';
-import { DESCRIPTION_MAX_LENGTH, NAME_MAX_LENGTH, NAME_MIN_LENGTH } from './../product.constants';
-import { AttributeDto, ImageDto, VariantDto } from './product.types';
+
+import { AttributeDto, ImageDto, VariantDto } from '@/product/dto/product.types';
+import {
+	DESCRIPTION_MAX_LENGTH,
+	NAME_MAX_LENGTH,
+	NAME_MIN_LENGTH,
+} from '@/product/product.constants';
 
 export class CreateProductRequest {
 	@IsString()

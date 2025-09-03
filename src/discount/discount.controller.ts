@@ -10,9 +10,10 @@ import {
 	Post,
 	Query,
 } from '@nestjs/common';
-import { DiscountService } from './discount.service';
-import { CreateDiscountRequest } from './dto/create-discount.dto';
-import { UpdateDiscountRequest } from './dto/update-discount.dto';
+
+import { DiscountService } from '@/discount/discount.service';
+import { CreateDiscountRequest } from '@/discount/dto/create-discount.dto';
+import { UpdateDiscountRequest } from '@/discount/dto/update-discount.dto';
 
 @Controller('discount')
 export class DiscountController {

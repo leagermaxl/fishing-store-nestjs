@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProductVariant } from '@prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateVariantRequest } from '../dto/variant/create-variant.dto';
-import { UpdateVariantRequest } from '../dto/variant/update-variant.dto';
-import { VARIANTS_NOT_FOUND } from '../product.constants';
-import { generateSKU } from '../utils/generateSku';
-import { ProductService } from './product.service';
+
+import { PrismaService } from '@/prisma/prisma.service';
+import { CreateVariantRequest } from '@/product/dto/variant/create-variant.dto';
+import { UpdateVariantRequest } from '@/product/dto/variant/update-variant.dto';
+import { VARIANTS_NOT_FOUND } from '@/product/product.constants';
+import { ProductService } from '@/product/services/product.service';
+import { generateSKU } from '@/product/utils/generateSku';
 
 @Injectable()
 export class VariantService {

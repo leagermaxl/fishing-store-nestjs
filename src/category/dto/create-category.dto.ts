@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '../category.constants';
+
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '@/category/category.constants';
 
 export class CreateCategoryRequest {
 	@IsString()
