@@ -74,7 +74,7 @@ export class VariantService {
 	async update(id: string, dto: UpdateVariantRequest): Promise<null> {
 		const { productId, inStock, price, discountId } = dto;
 
-		const product = await this.productService.findById(productId, true);
+		const product = productId && (await this.productService.findById(productId, true));
 
 		const variant = await this.prismaService.productVariant.update({
 			where: { id },
@@ -84,7 +84,7 @@ export class VariantService {
 				price,
 				discountId,
 				sku:
-					productId &&
+					product &&
 					generateSKU(
 						product.category!.name,
 						product.name,
