@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Recaptcha } from '@nestlab/google-recaptcha';
 import { Request, Response } from 'express';
 
 import { AuthService } from '@/auth/auth.service';
@@ -9,12 +10,14 @@ import { RegisterDto } from '@/auth/dto/register.dto';
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
+	@Recaptcha()
 	@HttpCode(HttpStatus.CREATED)
 	@Post('register')
 	public async register(@Req() req: Request, @Body() dto: RegisterDto) {
 		return await this.authService.register(req, dto);
 	}
 
+	@Recaptcha()
 	@HttpCode(HttpStatus.OK)
 	@Post('login')
 	public async login(@Req() req: Request, @Body() dto: LoginDto) {
