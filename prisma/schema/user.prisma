@@ -1,12 +1,53 @@
 model User {
   id String @id @default(uuid())
 
-  email    String
+  email    String @unique
   password String
-  name     String
+
+  name    String
+  picture String?
+
+  role UserRole @default(REGULAR)
+
+  isVerified  Boolean @default(false) @map("is_verified")
+  isTwoFactor Boolean @default(false) @map("is_two_factor")
+
+  methods AuthMethod[]
+
+  accounts Account[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Account {
+  id String @id @default(uuid())
+
+  type     String
+  provider String
+
+  accessToken  String? @map("access_token")
+  refreshToken String? @map("refresh_token")
+  expiresIn    Int?    @map("expires_in")
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("accounts")
+}
+
+enum UserRole {
+  REGULAR
+  ADMIN
+}
+
+enum AuthMethod {
+  CREDENTIALS
+  GOOGLE
+  GITHUB
 }

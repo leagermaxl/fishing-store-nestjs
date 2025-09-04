@@ -1,22 +1,36 @@
 version: '3.9'
 
 services:
-  fishing-store-postgres:
-    container_name: fishing-store-postgres
-    image: postgres:latest
-    restart: always
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - 5434:5432
-    volumes:
-      - fishing_store_postgres_data:/var/lib/postgresql/data
-    networks:
-      - fishing-store-nestjs
+    fishing-store-postgres:
+        container_name: fishing-store-postgres
+        image: postgres:latest
+        restart: always
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DATABASE}
+        ports:
+            - 5435:5432
+        volumes:
+            - fishing_store_postgres_data:/var/lib/postgresql/data
+        networks:
+            - fishing-store-nestjs
+
+    fishing-store-redis:
+        container_name: fishing-store-redis
+        image: redis:7.2.6
+        restart: always
+        ports:
+            - 6380:6379
+        command: redis-server --requirepass ${REDIS_PASSWORD}
+        volumes:
+            - fishing_store_redis_data:/data
+        networks:
+            - fishing-store-nestjs
 
 volumes:
-  fishing_store_postgres_data:
+    fishing_store_postgres_data:
+    fishing_store_redis_data:
 
 networks:
-  fishing-store-nestjs:
+    fishing-store-nestjs:
