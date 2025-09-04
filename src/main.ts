@@ -19,8 +19,6 @@ async function bootstrap() {
 
 	app.use(CookieParser(config.getOrThrow<string>('COOKIE_SECRET')));
 
-	app.setGlobalPrefix('api');
-
 	app.useGlobalPipes(new ValidationPipe());
 
 	app.use(

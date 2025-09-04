@@ -9,7 +9,7 @@ import { UserService } from '@/user/user.service';
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
-	@Authorization('ADMIN')
+	@Authorization()
 	@HttpCode(HttpStatus.OK)
 	@Get('profile')
 	public profile(@Authorized('email') email: string) {

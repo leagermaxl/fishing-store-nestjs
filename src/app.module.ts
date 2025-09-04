@@ -8,6 +8,7 @@ import { LoggerMiddleware } from '@/middlewares/logger.middleware';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { ProductModule } from '@/product/product.module';
 import { UserModule } from '@/user/user.module';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import { UserModule } from '@/user/user.module';
 		DiscountModule,
 		UserModule,
 		AuthModule,
+		ProviderModule,
 	],
 	controllers: [],
 	providers: [],

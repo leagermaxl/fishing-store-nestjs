@@ -16,6 +16,8 @@ import {
 } from '@/auth/auth.constants';
 import { LoginDto } from '@/auth/dto/login.dto';
 import { RegisterDto } from '@/auth/dto/register.dto';
+import { PrismaService } from '@/prisma/prisma.service';
+import { BaseOAuthService } from '@/provider/services/base-oauth.service';
 import { USER_NOT_FOUND } from '@/user/user.constants';
 import { UserService } from '@/user/user.service';
 
@@ -24,6 +26,7 @@ export class AuthService {
 	public constructor(
 		private readonly configService: ConfigService,
 		private readonly userService: UserService,
+		private readonly prismaService: PrismaService,
 	) {}
 
 	public async register(req: Request, dto: RegisterDto) {
@@ -74,6 +77,55 @@ export class AuthService {
 				resolve(null);
 			});
 		});
+	}
+
+	public async extractProfileFromCode(
+		code: string,
+		providerInstance: BaseOAuthService,
+		req: Request,
+	) {
+		const profile = await providerInstance.findUserByCode(code);
+
+		const account = await this.prismaService.account.findFirst({
+			where: { User: { email: profile.email }, provider: profile.provider },
+		});
+
+		const existUser = account?.userId ? await this.userService.findById(account.userId) : null;
+
+		if (existUser) {
+			return this.saveSession(req, existUser);
+		}
+
+		let user = await this.userService.findByEmail(profile.email);
+		if (user) {
+			await this.userService.update(user.id, {
+				methods: [...user.methods, AuthMethod[profile.provider.toUpperCase()]],
+			});
+		} else {
+			user = await this.userService.create({
+				email: profile.email,
+				name: profile.name,
+				password: '',
+				picture: profile.picture,
+				isVerified: false,
+				methods: [AuthMethod[profile.provider.toUpperCase()]],
+			});
+		}
+
+		if (!account) {
+			await this.prismaService.account.create({
+				data: {
+					userId: user.id,
+					provider: profile.provider,
+					type: 'oauth',
+					accessToken: profile.access_token,
+					refreshToken: profile.refresh_token,
+					expiresIn: parseInt(profile.expires_at!),
+				},
+			});
+		}
+
+		return this.saveSession(req, user);
 	}
 
 	public async saveSession(req: Request, user: User) {
