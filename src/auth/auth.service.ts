@@ -1,8 +1,11 @@
 import {
 	ConflictException,
+	forwardRef,
+	Inject,
 	Injectable,
 	InternalServerErrorException,
 	NotFoundException,
+	UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthMethod, User } from '@prisma/client';
@@ -13,9 +16,12 @@ import {
 	FAILED_DESTROY_SESSION,
 	FAILED_SAVE_SESSION,
 	USER_ALREADY_EXIST,
+	USER_NOT_VERIFIED,
 } from '@/auth/auth.constants';
 import { LoginDto } from '@/auth/dto/login.dto';
 import { RegisterDto } from '@/auth/dto/register.dto';
+import { EmailConfirmationService } from '@/auth/email-confirmation/email-confirmation.service';
+import { TwoFactorService } from '@/auth/two-factor/two-factor.service';
 import { PrismaService } from '@/prisma/prisma.service';
 import { BaseOAuthService } from '@/provider/services/base-oauth.service';
 import { USER_NOT_FOUND } from '@/user/user.constants';
@@ -27,6 +33,9 @@ export class AuthService {
 		private readonly configService: ConfigService,
 		private readonly userService: UserService,
 		private readonly prismaService: PrismaService,
+		@Inject(forwardRef(() => EmailConfirmationService))
+		private readonly emailConfirmationService: EmailConfirmationService,
+		private readonly twoFactorService: TwoFactorService,
 	) {}
 
 	public async register(req: Request, dto: RegisterDto) {
@@ -46,11 +55,13 @@ export class AuthService {
 			isVerified: false,
 		});
 
-		return this.saveSession(req, user);
+		await this.emailConfirmationService.sendVerificationToken(user.email);
+
+		return { message: 'Mail for confirm account send to your email.' };
 	}
 
 	public async login(req: Request, dto: LoginDto) {
-		const { email, password } = dto;
+		const { email, password, code } = dto;
 
 		const existUser = await this.userService.findByEmail(email);
 
@@ -61,6 +72,21 @@ export class AuthService {
 		const isValid = await verify(existUser.password, password);
 		if (!isValid) {
 			throw new NotFoundException(USER_NOT_FOUND);
+		}
+
+		if (!existUser.isVerified) {
+			await this.emailConfirmationService.sendVerificationToken(existUser.email);
+			throw new UnauthorizedException(USER_NOT_VERIFIED);
+		}
+
+		if (existUser.isTwoFactor) {
+			if (!code) {
+				await this.twoFactorService.sendTwoFactorToken(existUser.email);
+
+				return { message: 'Check mail and use two factor code.' };
+			}
+
+			await this.twoFactorService.validateTwoFactor(existUser.email, code);
 		}
 
 		return this.saveSession(req, existUser);
